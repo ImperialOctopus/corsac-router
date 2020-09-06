@@ -76,7 +76,7 @@ class HttpResource {
       return null;
     }
 
-    int i = 1;
+    var i = 1;
     for (var key in parameters) {
       resolvedParams[key] = m.group(i);
       i++;
@@ -85,15 +85,17 @@ class HttpResource {
     return resolvedParams;
   }
 
-  bool operator ==(HttpResource o) {
+  @override
+  bool operator ==(Object o) {
     final listEq = const ListEquality<dynamic>();
     final mapEq = const MapEquality<dynamic, dynamic>();
     return o is HttpResource &&
-        (o.path == this.path) &&
+        (o.path == path) &&
         listEq.equals(o.httpMethods, httpMethods) &&
         mapEq.equals(o.attributes, attributes);
   }
 
+  @override
   int get hashCode {
     return hash4(path, hashObjects(httpMethods), hashObjects(attributes.keys),
         hashObjects(attributes.values));
@@ -106,7 +108,7 @@ class HttpResource {
       param = _paramMatcher.stringMatch(parametrizedPath);
     }
 
-    return RegExp("^" + parametrizedPath + r"$");
+    return RegExp('^$parametrizedPath\$');
   }
 
   /// Extracts parameters from the path template.
