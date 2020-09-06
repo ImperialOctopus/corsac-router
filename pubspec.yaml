@@ -5,7 +5,7 @@ author: Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
 homepage: https://github.com/corsac-dart/router
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: ">=2.10.0-4.0.dev <3.0.0"
 
 dependencies:
   quiver: ^2.1.3
