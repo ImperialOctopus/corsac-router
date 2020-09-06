@@ -11,7 +11,7 @@ class Router {
   ///
   /// You can always leave it as `null` if you don't need to associate any
   /// information with your resources.
-  final Map<HttpResource, dynamic> resources = {};
+  final Map<HttpResource, dynamic> resources = <HttpResource, dynamic>{};
 
   /// Matches [uri] and [httpMethod] to a resource.
   MatchResult match(Uri uri, String httpMethod, {Map attributes}) {

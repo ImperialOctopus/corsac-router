@@ -42,24 +42,35 @@ void main() {
     });
 
     test('it matches only when attributes match', () {
-      HttpResource r =
-          HttpResource('/users', ['GET'], attributes: {#version: '1'});
+      HttpResource r = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#version: '1'});
       expect(r.matches(Uri.parse('/users')), isFalse);
       expect(
-          r.matches(Uri.parse('/users'), attributes: {#version: 1}), isFalse);
+          r.matches(Uri.parse('/users'),
+              attributes: <Symbol, int>{#version: 1}),
+          isFalse);
       expect(
-          r.matches(Uri.parse('/users'), attributes: {#version: '1'}), isTrue);
+          r.matches(Uri.parse('/users'),
+              attributes: <Symbol, String>{#version: '1'}),
+          isTrue);
     });
 
     test('equality', () {
-      var r1 = HttpResource('/users', ['GET'], attributes: {#version: '1'});
-      var r2 = HttpResource('/users', ['GET'], attributes: {#version: '1'});
+      var r1 = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#version: '1'});
+      var r2 = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#version: '1'});
       var r3 = HttpResource('/users', ['GET']);
-      var r4 = HttpResource('/users', ['GET'], attributes: {#version: '2'});
-      var r5 = HttpResource('/users', ['GET'], attributes: {#otherke: '1'});
-      var r6 = HttpResource('/users', ['PUT'], attributes: {#version: '1'});
-      var r7 = HttpResource('/posts', ['GET'], attributes: {#version: '1'});
-      var r8 = HttpResource('/users', ['get'], attributes: {#version: '1'});
+      var r4 = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#version: '2'});
+      var r5 = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#otherke: '1'});
+      var r6 = HttpResource('/users', ['PUT'],
+          attributes: <Symbol, String>{#version: '1'});
+      var r7 = HttpResource('/posts', ['GET'],
+          attributes: <Symbol, String>{#version: '1'});
+      var r8 = HttpResource('/users', ['get'],
+          attributes: <Symbol, String>{#version: '1'});
 
       expect(r1, equals(r2));
       expect(r1, isNot(equals(r3)));

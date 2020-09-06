@@ -6,14 +6,14 @@ import 'package:corsac_router/corsac_router.dart';
 void main() {
   group("Router", () {
     test("it matches to a route", () {
-      HttpResource r =
-          new HttpResource('/users', ['GET'], attributes: {#version: '1'});
+      HttpResource r = HttpResource('/users', ['GET'],
+          attributes: <Symbol, String>{#version: '1'});
 
-      Router router = new Router();
+      Router router = Router();
       router.resources[r] = 'test';
 
-      var result =
-          router.match(Uri.parse('/users'), 'GET', attributes: {#version: '1'});
+      var result = router.match(Uri.parse('/users'), 'GET',
+          attributes: <Symbol, String>{#version: '1'});
 
       expect(result, isA<MatchResult>());
       expect(result.hasMatch, isTrue);
@@ -26,9 +26,9 @@ void main() {
     });
 
     test("it matches to a null when no route found", () {
-      HttpResource r = new HttpResource('/users', ['GET']);
+      HttpResource r = HttpResource('/users', ['GET']);
 
-      Router router = new Router();
+      Router router = Router();
       router.resources[r] = 'test';
 
       var result = router.match(Uri.parse('/nope'), 'GET');

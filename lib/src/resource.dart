@@ -45,7 +45,7 @@ class HttpResource {
         httpMethods =
             List.unmodifiable(httpMethods.map((i) => i.toUpperCase()).toSet()),
         parameters = _extractPathParameters(path),
-        attributes = attributes ?? Map();
+        attributes = attributes ?? const <dynamic, dynamic>{};
 
   /// Returns true if provided [uri], [httpMethod] and [attributes] match
   /// this resource.
@@ -59,7 +59,7 @@ class HttpResource {
     }
 
     if (this.attributes.isNotEmpty) {
-      var eq = const MapEquality();
+      var eq = const MapEquality<dynamic, dynamic>();
       return result ? eq.equals(this.attributes, attributes) : false;
     } else {
       return result;
@@ -69,7 +69,7 @@ class HttpResource {
   /// Matches provided [uri] and [httpMethod] and returns list of extracted
   /// parameter values.
   Map<String, String> resolveParameters(Uri uri) {
-    Map<String, String> resolvedParams = new Map();
+    final resolvedParams = <String, String>{};
 
     Match m = pathRegExp.firstMatch(uri.path);
     if (parameters.length != m.groupCount) {
@@ -86,8 +86,8 @@ class HttpResource {
   }
 
   bool operator ==(HttpResource o) {
-    final listEq = const ListEquality();
-    final mapEq = const MapEquality();
+    final listEq = const ListEquality<dynamic>();
+    final mapEq = const MapEquality<dynamic, dynamic>();
     return o is HttpResource &&
         (o.path == this.path) &&
         listEq.equals(o.httpMethods, httpMethods) &&
@@ -106,12 +106,12 @@ class HttpResource {
       param = _paramMatcher.stringMatch(parametrizedPath);
     }
 
-    return new RegExp("^" + parametrizedPath + r"$");
+    return RegExp("^" + parametrizedPath + r"$");
   }
 
   /// Extracts parameters from the path template.
   static List<String> _extractPathParameters(String parametrizedPath) {
-    var params = [];
+    var params = <dynamic>[];
     var param = _paramMatcher.stringMatch(parametrizedPath);
     while (param != null) {
       parametrizedPath = parametrizedPath.replaceFirst(param, _paramRegExp);
@@ -119,6 +119,6 @@ class HttpResource {
       params.add(param);
       param = _paramMatcher.stringMatch(parametrizedPath); // get next
     }
-    return new List.unmodifiable(params);
+    return List.unmodifiable(params);
   }
 }
