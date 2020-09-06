@@ -8,7 +8,7 @@ Modified from Anatoly Pulyaevskiy's [Corsac Dart router](https://github.com/cors
 
 ## Installation
 
-There is no Pub package yet so you have to use git dependency for now:
+There is no Pub package so use a git dependency:
 
 ```yaml
 dependencies:
