@@ -14,7 +14,7 @@
 /// Web (HTTP) resources which can also be referred to as REST resources.
 library corsac_router;
 
-import 'package:collection/equality.dart';
+import 'package:collection/collection.dart';
 import 'package:quiver/core.dart';
 
 part 'src/resource.dart';
