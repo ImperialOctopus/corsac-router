@@ -12,3 +12,4 @@ dependencies:
 
 dev_dependencies:
   test: ^1.16.0-nullsafety.2
+  pedantic: ^1.10.0-nullsafety
