@@ -6,17 +6,18 @@ import 'package:corsac_router/corsac_router.dart';
 void main() {
   group('Router', () {
     test('it matches to a route', () {
-      HttpResource r = HttpResource('/users', ['GET'],
+      final r = HttpResource('/users', ['GET'],
           attributes: <Symbol, String>{#version: '1'});
 
-      Router router = Router();
+      final router = Router<String>();
       router.resources[r] = 'test';
 
       var result = router.match(Uri.parse('/users'), 'GET',
           attributes: <Symbol, String>{#version: '1'});
 
       expect(result, isA<MatchResult>());
-      expect(result.hasMatch, isTrue);
+      expect(result, isNotNull);
+      result!;
       expect(result.resource, same(r));
       expect(result.data, equals('test'));
       expect(result.parameters, isMap);
@@ -25,19 +26,15 @@ void main() {
       expect(result.attributes[#version], equals('1'));
     });
 
-    test('it matches to a null when no route found', () {
-      HttpResource r = HttpResource('/users', ['GET']);
+    test('it matches null when no route found', () {
+      final r = HttpResource('/users', ['GET']);
 
-      Router router = Router();
+      final router = Router<dynamic>();
       router.resources[r] = 'test';
 
       var result = router.match(Uri.parse('/nope'), 'GET');
 
-      expect(result, isA<MatchResult>());
-      expect(result.hasMatch, isFalse);
-      expect(result.resource, isNull);
-      expect(result.data, isNull);
-      expect(result.parameters, isNull);
+      expect(result, isNull);
     });
   });
 }
