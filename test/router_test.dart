@@ -4,8 +4,8 @@ import 'package:test/test.dart';
 import 'package:corsac_router/corsac_router.dart';
 
 void main() {
-  group("Router", () {
-    test("it matches to a route", () {
+  group('Router', () {
+    test('it matches to a route', () {
       HttpResource r = HttpResource('/users', ['GET'],
           attributes: <Symbol, String>{#version: '1'});
 
@@ -25,7 +25,7 @@ void main() {
       expect(result.attributes[#version], equals('1'));
     });
 
-    test("it matches to a null when no route found", () {
+    test('it matches to a null when no route found', () {
       HttpResource r = HttpResource('/users', ['GET']);
 
       Router router = Router();
