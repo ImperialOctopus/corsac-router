@@ -1,5 +1,5 @@
 name: corsac_router
-version: 0.2.0-nullsafety.1
+version: 0.2.0-nullsafety
 description: Simple HTTP routing library for server-side applications.
 author: Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
 homepage: https://github.com/corsac-dart/router
