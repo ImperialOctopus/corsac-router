@@ -15,7 +15,7 @@ void main() {
       var result =
           router.match(Uri.parse('/users'), 'GET', attributes: {#version: '1'});
 
-      expect(result, new isInstanceOf<MatchResult>());
+      expect(result, isA<MatchResult>());
       expect(result.hasMatch, isTrue);
       expect(result.resource, same(r));
       expect(result.data, equals('test'));
@@ -33,7 +33,7 @@ void main() {
 
       var result = router.match(Uri.parse('/nope'), 'GET');
 
-      expect(result, new isInstanceOf<MatchResult>());
+      expect(result, isA<MatchResult>());
       expect(result.hasMatch, isFalse);
       expect(result.resource, isNull);
       expect(result.data, isNull);
