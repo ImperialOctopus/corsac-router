@@ -5,8 +5,8 @@ part of corsac_router;
 /// Resources are defined by a [path] template and a list of
 /// allowed [httpMethods]. Optional [attributes] map can be provided as well.
 class HttpResource {
-  static final RegExp _paramMatcher = RegExp(r"{[a-zA-Z0-9]+}");
-  static final String _paramRegExp = "([^\/]+)";
+  static final RegExp _paramMatcher = RegExp(r'{[a-zA-Z0-9]+}');
+  static final String _paramRegExp = '([^\/]+)';
 
   /// Parametrized path template for this resource.
   final String path;
@@ -20,6 +20,7 @@ class HttpResource {
   /// List of parameter names for this resource.
   final List<String> parameters;
 
+  /// Map of attributes for this resource.
   final Map attributes;
 
   /// Creates new HttpResource.
@@ -39,17 +40,16 @@ class HttpResource {
   /// passed to `matches` method.
   ///
   /// Typical example of an attribute is a version of an HTTP API.
-  HttpResource(String path, Iterable<String> httpMethods, {Map attributes})
-      : path = path,
-        pathRegExp = _buildPathRegExp(path),
+  HttpResource(this.path, Iterable<String> httpMethods, {Map? attributes})
+      : pathRegExp = _buildPathRegExp(path),
         httpMethods =
             List.unmodifiable(httpMethods.map((i) => i.toUpperCase()).toSet()),
         parameters = _extractPathParameters(path),
-        attributes = attributes ?? const <dynamic, dynamic>{};
+        attributes = attributes ?? <dynamic, dynamic>{};
 
   /// Returns true if provided [uri], [httpMethod] and [attributes] match
   /// this resource.
-  bool matches(Uri uri, {String httpMethod, Map attributes}) {
+  bool matches(Uri uri, {String? httpMethod, Map? attributes}) {
     var result = false;
     if (httpMethod != null) {
       result = httpMethods.contains(httpMethod.toUpperCase()) &&
@@ -69,16 +69,17 @@ class HttpResource {
   /// Matches provided [uri] and [httpMethod] and returns list of extracted
   /// parameter values.
   Map<String, String> resolveParameters(Uri uri) {
-    final resolvedParams = <String, String>{};
+    var resolvedParams = <String, String>{};
 
-    Match m = pathRegExp.firstMatch(uri.path);
-    if (parameters.length != m.groupCount) {
-      return null;
+    Match? m = pathRegExp.firstMatch(uri.path);
+
+    if (m == null || parameters.length != m.groupCount) {
+      return <String, String>{};
     }
 
     var i = 1;
     for (var key in parameters) {
-      resolvedParams[key] = m.group(i);
+      resolvedParams[key] = m.group(i) ?? '';
       i++;
     }
 
