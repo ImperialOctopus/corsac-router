@@ -6,7 +6,7 @@ import 'package:corsac_router/corsac_router.dart';
 void main() {
   group("Resource", () {
     test("it matches static route", () {
-      HttpResource r = new HttpResource('/users', ['GET']);
+      HttpResource r = HttpResource('/users', ['GET']);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'GET'), isTrue);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'get'), isTrue);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'POST'), isFalse);
@@ -17,12 +17,12 @@ void main() {
     });
 
     test("it matches only route without HTTP method", () {
-      HttpResource r = new HttpResource('/users', ['GET']);
+      HttpResource r = HttpResource('/users', ['GET']);
       expect(r.matches(Uri.parse('/users')), isTrue);
     });
 
     test("it matches route with parameter", () {
-      HttpResource r = new HttpResource('/users/{userId}', ['GET']);
+      HttpResource r = HttpResource('/users/{userId}', ['GET']);
       expect(r.matches(Uri.parse('/users/234'), httpMethod: 'GET'), isTrue);
       expect(
           r.matches(Uri.parse('/users/324?status=active'), httpMethod: 'GET'),
@@ -34,7 +34,7 @@ void main() {
     });
 
     test("it extracts route parameters", () {
-      HttpResource r = new HttpResource('/users/{userId}', ['GET']);
+      HttpResource r = HttpResource('/users/{userId}', ['GET']);
       var params = r.resolveParameters(Uri.parse('/users/234'));
       expect(params, isMap);
       expect(params, hasLength(equals(1)));
@@ -43,7 +43,7 @@ void main() {
 
     test('it matches only when attributes match', () {
       HttpResource r =
-          new HttpResource('/users', ['GET'], attributes: {#version: '1'});
+          HttpResource('/users', ['GET'], attributes: {#version: '1'});
       expect(r.matches(Uri.parse('/users')), isFalse);
       expect(
           r.matches(Uri.parse('/users'), attributes: {#version: 1}), isFalse);
@@ -52,14 +52,14 @@ void main() {
     });
 
     test('equality', () {
-      var r1 = new HttpResource('/users', ['GET'], attributes: {#version: '1'});
-      var r2 = new HttpResource('/users', ['GET'], attributes: {#version: '1'});
-      var r3 = new HttpResource('/users', ['GET']);
-      var r4 = new HttpResource('/users', ['GET'], attributes: {#version: '2'});
-      var r5 = new HttpResource('/users', ['GET'], attributes: {#otherke: '1'});
-      var r6 = new HttpResource('/users', ['PUT'], attributes: {#version: '1'});
-      var r7 = new HttpResource('/posts', ['GET'], attributes: {#version: '1'});
-      var r8 = new HttpResource('/users', ['get'], attributes: {#version: '1'});
+      var r1 = HttpResource('/users', ['GET'], attributes: {#version: '1'});
+      var r2 = HttpResource('/users', ['GET'], attributes: {#version: '1'});
+      var r3 = HttpResource('/users', ['GET']);
+      var r4 = HttpResource('/users', ['GET'], attributes: {#version: '2'});
+      var r5 = HttpResource('/users', ['GET'], attributes: {#otherke: '1'});
+      var r6 = HttpResource('/users', ['PUT'], attributes: {#version: '1'});
+      var r7 = HttpResource('/posts', ['GET'], attributes: {#version: '1'});
+      var r8 = HttpResource('/users', ['get'], attributes: {#version: '1'});
 
       expect(r1, equals(r2));
       expect(r1, isNot(equals(r3)));

@@ -19,10 +19,10 @@ class Router {
         (r) => r.matches(uri, httpMethod: httpMethod, attributes: attributes),
         orElse: () => null);
     if (resource is HttpResource) {
-      return new MatchResult(resource, resources[resource],
+      return MatchResult(resource, resources[resource],
           resource.resolveParameters(uri), resource.attributes);
     } else {
-      return new MatchResult(null, null, null, null);
+      return MatchResult(null, null, null, null);
     }
   }
 }
@@ -43,5 +43,5 @@ class MatchResult {
 
   MatchResult(this.resource, this.data, this.parameters, this.attributes);
 
-  bool get hasMatch => this.resource is HttpResource;
+  bool get hasMatch => resource is HttpResource;
 }

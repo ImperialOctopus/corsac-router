@@ -5,7 +5,7 @@ part of corsac_router;
 /// Resources are defined by a [path] template and a list of
 /// allowed [httpMethods]. Optional [attributes] map can be provided as well.
 class HttpResource {
-  static final RegExp _paramMatcher = new RegExp(r"{[a-zA-Z0-9]+}");
+  static final RegExp _paramMatcher = RegExp(r"{[a-zA-Z0-9]+}");
   static final String _paramRegExp = "([^\/]+)";
 
   /// Parametrized path template for this resource.
@@ -42,18 +42,18 @@ class HttpResource {
   HttpResource(String path, Iterable<String> httpMethods, {Map attributes})
       : path = path,
         pathRegExp = _buildPathRegExp(path),
-        httpMethods = new List.unmodifiable(
-            httpMethods.map((i) => i.toUpperCase()).toSet()),
+        httpMethods =
+            List.unmodifiable(httpMethods.map((i) => i.toUpperCase()).toSet()),
         parameters = _extractPathParameters(path),
-        attributes = attributes ?? new Map();
+        attributes = attributes ?? Map();
 
   /// Returns true if provided [uri], [httpMethod] and [attributes] match
   /// this resource.
   bool matches(Uri uri, {String httpMethod, Map attributes}) {
     var result = false;
     if (httpMethod != null) {
-      result = this.httpMethods.contains(httpMethod.toUpperCase()) &&
-          this.pathRegExp.hasMatch(uri.path);
+      result = httpMethods.contains(httpMethod.toUpperCase()) &&
+          pathRegExp.hasMatch(uri.path);
     } else {
       result = pathRegExp.hasMatch(uri.path);
     }
@@ -72,12 +72,12 @@ class HttpResource {
     Map<String, String> resolvedParams = new Map();
 
     Match m = pathRegExp.firstMatch(uri.path);
-    if (this.parameters.length != m.groupCount) {
+    if (parameters.length != m.groupCount) {
       return null;
     }
 
     int i = 1;
-    for (var key in this.parameters) {
+    for (var key in parameters) {
       resolvedParams[key] = m.group(i);
       i++;
     }
@@ -90,8 +90,8 @@ class HttpResource {
     final mapEq = const MapEquality();
     return o is HttpResource &&
         (o.path == this.path) &&
-        listEq.equals(o.httpMethods, this.httpMethods) &&
-        mapEq.equals(o.attributes, this.attributes);
+        listEq.equals(o.httpMethods, httpMethods) &&
+        mapEq.equals(o.attributes, attributes);
   }
 
   int get hashCode {
