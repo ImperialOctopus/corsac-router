@@ -6,7 +6,7 @@ import 'package:corsac_router/corsac_router.dart';
 void main() {
   group('Resource', () {
     test('it matches static route', () {
-      HttpResource r = HttpResource('/users', ['GET']);
+      final r = HttpResource('/users', ['GET']);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'GET'), isTrue);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'get'), isTrue);
       expect(r.matches(Uri.parse('/users'), httpMethod: 'POST'), isFalse);
@@ -17,12 +17,12 @@ void main() {
     });
 
     test('it matches only route without HTTP method', () {
-      HttpResource r = HttpResource('/users', ['GET']);
+      final r = HttpResource('/users', ['GET']);
       expect(r.matches(Uri.parse('/users')), isTrue);
     });
 
     test('it matches route with parameter', () {
-      HttpResource r = HttpResource('/users/{userId}', ['GET']);
+      final r = HttpResource('/users/{userId}', ['GET']);
       expect(r.matches(Uri.parse('/users/234'), httpMethod: 'GET'), isTrue);
       expect(
           r.matches(Uri.parse('/users/324?status=active'), httpMethod: 'GET'),
@@ -34,15 +34,15 @@ void main() {
     });
 
     test('it extracts route parameters', () {
-      HttpResource r = HttpResource('/users/{userId}', ['GET']);
-      var params = r.resolveParameters(Uri.parse('/users/234'));
+      final r = HttpResource('/users/{userId}', ['GET']);
+      final params = r.resolveParameters(Uri.parse('/users/234'));
       expect(params, isMap);
       expect(params, hasLength(equals(1)));
       expect(params['userId'], equals('234'));
     });
 
     test('it matches only when attributes match', () {
-      HttpResource r = HttpResource('/users', ['GET'],
+      final r = HttpResource('/users', ['GET'],
           attributes: <Symbol, String>{#version: '1'});
       expect(r.matches(Uri.parse('/users')), isFalse);
       expect(

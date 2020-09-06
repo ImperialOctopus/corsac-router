@@ -15,7 +15,7 @@
 library corsac_router;
 
 import 'package:collection/collection.dart';
-import 'package:quiver/core.dart';
+import 'src/hash.dart';
 
 part 'src/resource.dart';
 part 'src/router.dart';
