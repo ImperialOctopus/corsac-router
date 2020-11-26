@@ -13,7 +13,7 @@ There is no Pub package so use a git dependency:
 ```yaml
 dependencies:
   corsac_router:
-    git: https://github.com/ImperialOctopus/router.git
+    git: https://github.com/ImperialOctopus/corsac-router.git
 ```
 
 ## Usage
